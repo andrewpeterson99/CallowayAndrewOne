@@ -32,7 +32,16 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public bool timeModify = false;
 		public bool gravityModify = false;
 		public GameObject bgmObj;
+		public GameObject slowMoObj;
+		public AudioClip slowMoIn;
+		public AudioClip slowMoOut;
 		private AudioSource  bgm;
+		private AudioSource slowMoSFX;
+		private Rigidbody rb;
+		public float forcePower;
+
+		public GameObject mainCamera;
+		private UnityStandardAssets.ImageEffects.MotionBlur blur;
 
 		void Start()
 		{
@@ -46,26 +55,58 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 
 			bgm = bgmObj.GetComponent<AudioSource> ();
+			slowMoSFX = slowMoObj.GetComponent<AudioSource> ();
+			rb = this.gameObject.GetComponent<Rigidbody> ();
+			blur = mainCamera.GetComponent<UnityStandardAssets.ImageEffects.MotionBlur> ();
 		}
 
 		void Update(){
 			if (Input.GetKeyDown (KeyCode.O)) {
-				m_JumpPower += 1f;
-			} else if (Input.GetKeyDown (KeyCode.P)) {
-				m_JumpPower -= 1f;
+				rb.AddForce(Vector3.down * forcePower, ForceMode.Force);
+			}
+			if (Input.GetKey (KeyCode.P)) {
+				rb.AddForce(Vector3.up * forcePower, ForceMode.Force);
+			}
+			if(Input.GetKey(KeyCode.Alpha0)){
+				rb.AddForce(transform.forward * forcePower, ForceMode.Force);
 			}
 			if (Input.GetKeyDown (KeyCode.U)) {
 				timeModify = !timeModify;
+				if(Input.GetKeyDown(KeyCode.U) && timeModify){
+
+					slowMoSFX.PlayOneShot(slowMoIn);
+				}
+				else if(Input.GetKeyDown(KeyCode.U) && timeModify == false){
+					mainCamera.GetComponent<UnityStandardAssets.ImageEffects.MotionBlur>().blurAmount -= 0.01f;
+					slowMoSFX.PlayOneShot(slowMoOut);
+				}
+			}
+			if (mainCamera.GetComponent<UnityStandardAssets.ImageEffects.MotionBlur> ().blurAmount >= 0.8f) {
+				blur.blurAmount = 0.8f;
 			}
 			if (timeModify) {
-				Time.timeScale = 0.5f;
+				blur.blurAmount += 0.01f;
+				Time.timeScale -= 0.02f;
 				Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
-				bgm.pitch = 0.85f;
+				bgm.pitch -= 0.01f;
+				if(Time.timeScale <= 0.4f){
+					Time.timeScale = 0.4f;
+				}
+				if(bgm.pitch <= 0.65f){
+					bgm.pitch = 0.65f;
+				}
 			}
 			if (timeModify == false) {
-				Time.timeScale = 1f;
+				blur.blurAmount -= 0.05f;
+				Time.timeScale += 0.02f;
 				Time.fixedDeltaTime = 0.02f * Time.timeScale;
-				bgm.pitch = 1f;
+				bgm.pitch  += 0.01f;
+				if(Time.timeScale >= 1f){
+					Time.timeScale = 1f;
+				}
+				if(bgm.pitch >= 1f){
+					bgm.pitch = 1f;
+				}
 			}
 			if (Input.GetKeyDown (KeyCode.I)) {
 				gravityModify = !gravityModify;
