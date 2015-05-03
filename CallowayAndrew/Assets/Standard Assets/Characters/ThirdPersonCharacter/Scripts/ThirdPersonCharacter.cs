@@ -70,18 +70,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if(Input.GetKey(KeyCode.Alpha0)){
 				rb.AddForce(transform.forward * forcePower, ForceMode.Force);
 			}
-			if (Input.GetKeyDown (KeyCode.U)) {
+			if (Input.GetKeyDown (KeyCode.CapsLock)) {
 				timeModify = !timeModify;
-				if(Input.GetKeyDown(KeyCode.U) && timeModify){
+				if(Input.GetKeyDown(KeyCode.CapsLock) && timeModify){
 
 					slowMoSFX.PlayOneShot(slowMoIn);
 				}
-				else if(Input.GetKeyDown(KeyCode.U) && timeModify == false){
-					mainCamera.GetComponent<UnityStandardAssets.ImageEffects.MotionBlur>().blurAmount -= 0.01f;
+				else if(Input.GetKeyDown(KeyCode.CapsLock) && timeModify == false){
+					blur.blurAmount -= 0.01f;
 					slowMoSFX.PlayOneShot(slowMoOut);
 				}
 			}
-			if (mainCamera.GetComponent<UnityStandardAssets.ImageEffects.MotionBlur> ().blurAmount >= 0.8f) {
+			if (blur.blurAmount >= 0.8f) {
 				blur.blurAmount = 0.8f;
 			}
 			if (timeModify) {
