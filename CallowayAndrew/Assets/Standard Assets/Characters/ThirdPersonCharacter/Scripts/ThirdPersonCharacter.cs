@@ -58,6 +58,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			slowMoSFX = slowMoObj.GetComponent<AudioSource> ();
 			rb = this.gameObject.GetComponent<Rigidbody> ();
 			blur = mainCamera.GetComponent<UnityStandardAssets.ImageEffects.MotionBlur> ();
+			Debug.Log (slowMoIn.length);
 		}
 
 		void Update(){
@@ -118,6 +119,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_GravityMultiplier = 2f;
 			}
 		}
+
 
 		public void Move(Vector3 move, bool crouch, bool jump)
 		{
