@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
 	[RequireComponent(typeof(Rigidbody))]
@@ -39,6 +39,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private AudioSource slowMoSFX;
 		private Rigidbody rb;
 		public float forcePower;
+		private AudioSource turretSounds;
+		public int playerLives;
+		public GameObject[] playerBody;
 
 		public GameObject mainCamera;
 		private UnityStandardAssets.ImageEffects.MotionBlur blur;
@@ -58,11 +61,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			slowMoSFX = slowMoObj.GetComponent<AudioSource> ();
 			rb = this.gameObject.GetComponent<Rigidbody> ();
 			blur = mainCamera.GetComponent<UnityStandardAssets.ImageEffects.MotionBlur> ();
-			Debug.Log (slowMoIn.length);
+		
 		}
 
 		void Update(){
-			if (Input.GetKeyDown (KeyCode.O)) {
+			if (playerLives <= 0) {
+				for(var i = 0; i < playerBody.Length; i++){
+					Destroy(playerBody[i].gameObject);
+					StartCoroutine(GameOver());
+				}
+			}
+			//FLIGHT TESTING
+			/*if (Input.GetKeyDown (KeyCode.O)) {
 				rb.AddForce(Vector3.down * forcePower, ForceMode.Force);
 			}
 			if (Input.GetKey (KeyCode.P)) {
@@ -71,6 +81,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if(Input.GetKey(KeyCode.Alpha0)){
 				rb.AddForce(transform.forward * forcePower, ForceMode.Force);
 			}
+			*/
 			if (Input.GetKeyDown (KeyCode.CapsLock)) {
 				timeModify = !timeModify;
 				if(Input.GetKeyDown(KeyCode.CapsLock) && timeModify){
@@ -88,7 +99,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (timeModify) {
 				blur.blurAmount += 0.01f;
 				Time.timeScale -= 0.02f;
-				Time.fixedDeltaTime = Time.fixedDeltaTime * Time.timeScale;
+				Time.fixedDeltaTime = 0.02f * Time.timeScale;
 				bgm.pitch -= 0.01f;
 				if(Time.timeScale <= 0.4f){
 					Time.timeScale = 0.4f;
@@ -109,6 +120,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					bgm.pitch = 1f;
 				}
 			}
+			//GRAVITY TESTING
+			/*
 			if (Input.GetKeyDown (KeyCode.I)) {
 				gravityModify = !gravityModify;
 			}
@@ -118,7 +131,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (gravityModify == false) {
 				m_GravityMultiplier = 2f;
 			}
+			*/
 		}
+		IEnumerator GameOver(){
+			yield return new WaitForSeconds (4f);
+			Application.LoadLevel ("GameOver");
+		}
+		void OnTriggerEnter(Collider _other){
+			if (_other.gameObject.tag == "Bullet") {
+				Destroy(_other.gameObject);
+				playerLives -= 1;
+			}
+		}
+
 
 
 		public void Move(Vector3 move, bool crouch, bool jump)

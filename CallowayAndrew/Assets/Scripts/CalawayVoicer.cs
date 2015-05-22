@@ -26,7 +26,7 @@ public class CalawayVoicer : MonoBehaviour {
 		if (temp) {
 			switcher += 0.01f;
 		}
-		if (switcher >= 1.25f) {
+		if (switcher >= 2f) {
 			norm.TransitionTo(0.1f);
 		}
 	

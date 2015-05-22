@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Detector : MonoBehaviour {
 
+	public GameObject player;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -14,7 +16,8 @@ public class Detector : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Water") {
-			Application.LoadLevel(Application.loadedLevel);
+			Destroy(player.gameObject);
+			//Application.LoadLevel(Application.loadedLevel);
 		}
 	}
 }

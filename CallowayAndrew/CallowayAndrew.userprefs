@@ -1,12 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\..\Downloads\New Unity Project\Assets\Scripts\Load lvl2.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs">
     <Files>
-      <File FileName="..\..\..\..\..\Downloads\New Unity Project\New Unity Project.sln" Line="1" Column="1" />
-      <File FileName="..\..\..\..\..\Downloads\New Unity Project\Assets\Scripts\Load lvl2.js" Line="3" Column="5" />
-      <File FileName="Assets\Scripts\CalawayVoicer.cs" Line="29" Column="23" />
-      <File FileName="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" Line="1" Column="1" />
+      <File FileName="Assets\Standard Assets\Characters\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" Line="67" Column="36" />
+      <File FileName="Assets\Scripts\TurretScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CalawayVoicer.cs" Line="1" Column="1" />
       <File FileName="..\..\..\PortalJon\New Unity Project\Assets\PlayerScript.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\..\..\Dropbox\MyFirstProjectRe3\Assets\Scripts\PlatformMove.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
